@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MySampleHub - Discover, try, and love the best emerging brands in India. Get exclusive trial boxes delivered to your door.">
+    <meta name="keywords" content="samples, beauty, snacks, fragrances, supplements, India, emerging brands">
+    <title>MySampleHub: Discover. Try. Love. | Exclusive Trial Boxes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="assets/logo.png" alt="MySampleHub Logo" class="logo-image">
+                    <div class="logo-text">
+                        <span class="logo-name">SAMPLEHUB</span>
+                        <span class="logo-tagline">DISCOVER. TRY. LOVE.</span>
+                    </div>
+                </div>
+                <a href="https://forms.gle/eUpGTC5LmcuZTHMp7" target="_blank" class="header-cta-button">
+                    Join Waitlist
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Stop Guessing, Start Trying: The Best Emerging Brands in India, Delivered to Your Door.</h1>
+                <p class="hero-subtitle">Get exclusive, curated trial boxes of top-rated Beauty, Snacks, Fragrances, and Supplements—<strong>FREE</strong>. All we ask for is your honest opinion.</p>
+                
+                <!-- Scarcity Counter -->
+                <div class="scarcity-badge">
+                    <span class="pulse-dot"></span>
+                    <strong>WAITLIST CLOSING SOON!</strong> Only <span id="spots-left">247</span> spots left in the launch cohort.
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Form Section -->
+        <section class="waitlist-section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="form-title">Join the Exclusive Launch Waitlist</h2>
+                    <p class="form-subtitle">Be among the first 1,000 members to receive the inaugural box</p>
+                    
+                    <div class="form-cta-content">
+                        <div class="form-benefits">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Exclusive early access to top emerging brands</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Free curated sample boxes delivered</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Special discounts on products you love</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://forms.gle/eUpGTC5LmcuZTHMp7" target="_blank" class="cta-button cta-button-large">
+                            🎁 Join the Waitlist Now!
+                        </a>
+                        
+                        <p class="form-note">Takes less than 1 minute • Completely FREE</p>
+                    </div>
+                    
+                    <p class="form-disclaimer">By joining, you agree to provide honest feedback on the samples you receive.</p>
+                </div>
+
+                <!-- Sample Box Visual -->
+                <div class="box-preview">
+                    <div class="box-image">
+                        <div class="box-placeholder">
+                            <span class="box-emoji">📦✨</span>
+                            <p class="box-title">Your curated discovery box awaits!</p>
+                            <p class="box-subtitle">Want to visualize what's inside?</p>
+                            <button class="preview-box-button" onclick="openBoxPreview()">
+                                👀 Preview Your Box
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Box Preview Modal -->
+        <div id="boxPreviewModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeBoxPreview()">&times;</span>
+                <h2 class="modal-title">🎁 Your MySampleHub Discovery Box</h2>
+                <p class="modal-subtitle">Here's what you can expect in your curated sample box!</p>
+                
+                <div class="box-contents">
+                    <div class="box-section">
+                        <div class="product-item beauty-item">
+                            <div class="product-icon">💄</div>
+                            <div class="product-info">
+                                <h4>Beauty Sample</h4>
+                                <p>Premium serum or moisturizer</p>
+                            </div>
+                        </div>
+                        <div class="product-item snack-item">
+                            <div class="product-icon">🍫</div>
+                            <div class="product-info">
+                                <h4>Snack Sample</h4>
+                                <p>Protein bar or artisan chocolate</p>
+                            </div>
+                        </div>
+                        <div class="product-item fragrance-item">
+                            <div class="product-icon">🌺</div>
+                            <div class="product-info">
+                                <h4>Fragrance Sample</h4>
+                                <p>Perfume vial or body mist</p>
+                            </div>
+                        </div>
+                        <div class="product-item wellness-item">
+                            <div class="product-icon">💊</div>
+                            <div class="product-info">
+                                <h4>Wellness Sample</h4>
+                                <p>Vitamin or supplement pack</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="box-perks">
+                        <div class="perk-badge">
+                            <span class="perk-icon">🎟️</span>
+                            <span>Exclusive Discount Codes</span>
+                        </div>
+                        <div class="perk-badge">
+                            <span class="perk-icon">📝</span>
+                            <span>Feedback Survey</span>
+                        </div>
+                        <div class="perk-badge">
+                            <span class="perk-icon">🎁</span>
+                            <span>Surprise Bonus Item</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-cta">
+                    <p class="modal-note">💝 All samples are FREE • Delivered to your doorstep • No hidden charges</p>
+                    <a href="https://forms.gle/eUpGTC5LmcuZTHMp7" target="_blank" class="cta-button cta-button-large">
+                        Join Waitlist Now!
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Propositions Section -->
+        <section class="value-props">
+            <div class="container">
+                <h2 class="section-title">Why Join MySampleHub?</h2>
+                
+                <div class="value-grid">
+                    <div class="value-card">
+                        <div class="value-icon">⚡</div>
+                        <h3>Discover What's Next</h3>
+                        <p>Be the first in India to try the hottest new products from innovative emerging brands, weeks before they hit the mainstream.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">💸</div>
+                        <h3>Zero Risk, Zero Cost</h3>
+                        <p>Trial high-value products across four trending categories—Beauty, Snacks, Fragrances, and Supplements—without spending a single rupee.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">🗣️</div>
+                        <h3>Your Voice Matters</h3>
+                        <p>Provide direct, structured feedback that helps shape the future products of innovative brands. Your opinion drives innovation.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">🔑</div>
+                        <h3>Unlock Exclusive Deals</h3>
+                        <p>Receive a unique, high-value discount code if you love the product and decide to buy the full size. Save while you discover.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Categories Showcase -->
+        <section class="categories-showcase">
+            <div class="container">
+                <h2 class="section-title">Discover Across 4 Exciting Categories</h2>
+                <p class="section-subtitle">Curated samples from India's fastest-growing brands delivered to your doorstep</p>
+                
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-image-placeholder beauty-gradient">
+                            <span class="category-emoji">💄</span>
+                        </div>
+                        <h3>Beauty & Skincare</h3>
+                        <p>Premium serums, moisturizers, masks, and makeup from innovative beauty brands</p>
+                        <div class="category-examples">
+                            <span class="example-tag">Serums</span>
+                            <span class="example-tag">Lipsticks</span>
+                            <span class="example-tag">Face Masks</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-image-placeholder snacks-gradient">
+                            <span class="category-emoji">🍫</span>
+                        </div>
+                        <h3>Snacks & Confectionery</h3>
+                        <p>Healthy snacks, artisan chocolates, protein bars, and guilt-free indulgences</p>
+                        <div class="category-examples">
+                            <span class="example-tag">Protein Bars</span>
+                            <span class="example-tag">Chocolates</span>
+                            <span class="example-tag">Cookies</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-image-placeholder fragrance-gradient">
+                            <span class="category-emoji">🌺</span>
+                        </div>
+                        <h3>Perfumes & Fragrances</h3>
+                        <p>Luxury perfumes, natural fragrances, and body mists from premium brands</p>
+                        <div class="category-examples">
+                            <span class="example-tag">Perfumes</span>
+                            <span class="example-tag">Body Mists</span>
+                            <span class="example-tag">Attars</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-image-placeholder wellness-gradient">
+                            <span class="category-emoji">💊</span>
+                        </div>
+                        <h3>Supplements & Wellness</h3>
+                        <p>Vitamins, protein supplements, herbal wellness products, and nutrition boosters</p>
+                        <div class="category-examples">
+                            <span class="example-tag">Vitamins</span>
+                            <span class="example-tag">Proteins</span>
+                            <span class="example-tag">Ayurveda</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Sign Up & Choose</h3>
+                        <p>Join the waitlist and tell us which categories excite you most.</p>
+                    </div>
+
+                    <div class="step-arrow">→</div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Receive Your Box</h3>
+                        <p>Get a curated selection of samples from India's top emerging brands delivered to your door.</p>
+                    </div>
+
+                    <div class="step-arrow">→</div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Try & Review</h3>
+                        <p>Experience each product and share your honest feedback to help brands improve.</p>
+                    </div>
+
+                    <div class="step-arrow">→</div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Unlock Rewards</h3>
+                        <p>Earn points and exclusive discount codes for products you love.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof Section -->
+        <section class="social-proof">
+            <div class="container">
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number" id="waitlist-count">0</div>
+                        <div class="stat-label">Members Joining</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Aimed Partner Brands</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Product Categories</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta">
+            <div class="container">
+                <h2>Don't Miss Out on the Launch!</h2>
+                <p>Limited spots available. Join now to guarantee your place in the first shipment.</p>
+                <a href="#waitlist-form" class="cta-button cta-button-large">Secure Your Spot Now</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-name">SAMPLEHUB</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="mailto:shoeb@mysamplehub.in">Contact</a>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/mysamplehub/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                <a href="https://x.com/MySampleHub" target="_blank" rel="noopener noreferrer" class="social-link">Twitter</a>
+                <a href="mailto:shoeb@mysamplehub.in" class="social-link">Email</a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 MySampleHub.in | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
