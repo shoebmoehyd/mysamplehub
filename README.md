@@ -95,7 +95,7 @@ git push -u origin main
 ### Google Forms Integration
 
 Current form: [https://forms.gle/eUpGTC5LmcuZTHMp7](https://forms.gle/eUpGTC5LmcuZTHMp7)  
-Responses: [Google Sheets](https://docs.google.com/spreadsheets/d/1w9uBxXbcApcOR4egkTfSwifnwaPIhx3HvZk5_SzMc5w/)
+Responses are collected in a private Google Sheets (admin access only).
 
 Form opens in new tab when users click "Join Waitlist" buttons.
 
