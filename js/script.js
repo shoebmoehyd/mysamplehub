@@ -239,7 +239,6 @@ function setupFormValidation() {
             
             const firstName = document.getElementById('firstName').value.trim();
             const email = document.getElementById('email').value.trim().toLowerCase();
-            const phone = document.getElementById('phone').value.trim();
             const howHeard = document.getElementById('howHeard').value;
             const preferredTime = document.getElementById('preferredTime').value;
             const submitButton = form.querySelector('.submit-button');
@@ -350,7 +349,6 @@ function setupFormValidation() {
             const formData = {
                 firstName,
                 email,
-                phone,
                 categories: selectedCategories,
                 interestRatings,
                 howHeard,

@@ -145,6 +145,30 @@ body {
     font-weight: 700;
 }
 
+.hero-subtitle .highlight-free {
+    color: var(--primary-purple);
+    font-weight: 900;
+    font-size: 1.3em;
+    text-decoration: underline;
+    text-decoration-color: var(--primary-pink);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+    display: inline-block;
+    animation: bounce-free 2s ease-in-out infinite;
+}
+
+@keyframes bounce-free {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
 /* Scarcity Badge */
 .scarcity-badge {
     display: inline-flex;
@@ -157,6 +181,15 @@ body {
     font-weight: 600;
     color: var(--primary-purple);
     animation: pulse-border 2s infinite;
+}
+
+.scarcity-badge .spots-number {
+    font-size: 1.5em;
+    font-weight: 900;
+    color: var(--primary-purple);
+    background: var(--primary-pink);
+    padding: 2px 12px;
+    border-radius: 20px;
 }
 
 .pulse-dot {
@@ -191,15 +224,15 @@ body {
    Waitlist Form Section
    ================== */
 .waitlist-section {
-    padding: 80px 0;
+    padding: 60px 0;
     background: var(--white);
 }
 
 .waitlist-section .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+    gap: 30px;
+    align-items: start;
 }
 
 .form-container {
@@ -697,6 +730,35 @@ body {
 
 .modal-cta {
     text-align: center;
+}
+
+.modal-cta .cta-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-cta .cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transition: left 0.5s;
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    20% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 .modal-note {
