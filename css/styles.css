@@ -258,6 +258,158 @@ body {
     box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
 }
 
+.waitlist-form-embedded {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.submit-button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-note {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+/* Checkbox styling */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.checkbox-label:hover {
+    border-color: var(--primary-purple);
+    background: var(--light-pink);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-purple);
+}
+
+.checkbox-label span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Interest rating styles */
+.interest-ratings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    background: var(--white);
+    border-radius: 10px;
+}
+
+.interest-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.interest-item:last-child {
+    border-bottom: none;
+}
+
+.interest-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    flex: 1;
+}
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 28px;
+    cursor: pointer;
+    color: #D3D3D3;
+    transition: all 0.2s ease;
+    filter: grayscale(100%);
+}
+
+.star-rating label:hover {
+    transform: scale(1.1);
+}
+
+.star-rating label.hover {
+    color: #FFD700;
+    filter: grayscale(0%);
+}
+
+.star-rating label.active {
+    color: #FFD700;
+    filter: grayscale(0%);
+}
+
+.star-rating input:checked ~ label {
+    color: #FFD700;
+    filter: grayscale(0%);
+}
+
+.form-error {
+    color: #E74C3C;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.email-suggestion {
+    color: #E67E22;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.email-suggestion a {
+    color: var(--primary-purple);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.email-suggestion a:hover {
+    color: var(--dark-purple);
+}
+
 .cta-button {
     background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
     color: var(--white);
@@ -1099,8 +1251,20 @@ body {
     background: #25D366;
 }
 
+.social-btn.instagram {
+    background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+}
+
 .social-btn.twitter {
     background: #1DA1F2;
+}
+
+.social-btn.facebook {
+    background: #1877F2;
+}
+
+.social-btn.linkedin {
+    background: #0A66C2;
 }
 
 .social-btn.email {

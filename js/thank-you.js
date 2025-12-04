@@ -5,20 +5,20 @@ function getUserData() {
     const urlParams = new URLSearchParams(window.location.search);
     const firstName = urlParams.get('name') || 'friend';
     const email = urlParams.get('email') || 'your email';
+    const refCode = urlParams.get('ref') || generateReferralCode(email);
     
-    return { firstName, email };
+    return { firstName, email, refCode };
 }
 
-// Generate unique referral code
+// Generate unique referral code (from email hash)
 function generateReferralCode(email) {
-    // Simple hash function for demo (in production, get from backend)
-    const hash = btoa(email).substring(0, 8).replace(/[^a-zA-Z0-9]/g, '');
-    return hash.toUpperCase();
+    // Use the same base64 encoding as in the form submission
+    return btoa(email).substring(0, 8).replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
 }
 
 // Populate user information
 function populateUserInfo() {
-    const { firstName, email } = getUserData();
+    const { firstName, email, refCode } = getUserData();
     
     const nameElement = document.getElementById('user-name');
     const emailElement = document.getElementById('user-email');
@@ -31,9 +31,8 @@ function populateUserInfo() {
         emailElement.textContent = email;
     }
     
-    // Generate and display referral link
-    const referralCode = generateReferralCode(email);
-    const referralLink = `https://mysamplehub.in?ref=${referralCode}`;
+    // Use the referral code from URL or generated one
+    const referralLink = `https://mysamplehub.in?ref=${refCode}`;
     
     const referralInput = document.getElementById('referral-link');
     if (referralInput) {
@@ -45,9 +44,11 @@ function populateUserInfo() {
     
     // Store referral info
     localStorage.setItem('mysamplehub_referral', JSON.stringify({
-        code: referralCode,
+        code: refCode,
         link: referralLink,
-        referrals: 0
+        email: email,
+        referrals: 0,
+        timestamp: new Date().toISOString()
     }));
 }
 
@@ -88,21 +89,40 @@ function copyReferralLink() {
 // Setup social sharing buttons
 function setupSocialSharing(referralLink, firstName) {
     const shareMessage = `Hey! I just joined MySampleHub to discover amazing D2C brands in India. Join me and get exclusive trial boxes FREE! 🎁`;
+    const shareMessageShort = `Join MySampleHub - Get FREE trial boxes from India's best D2C brands! 🎁`;
     
     // WhatsApp
     const whatsappBtn = document.getElementById('whatsapp-share');
     if (whatsappBtn) {
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareMessage + ' ' + referralLink)}`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareMessage + '\n\n' + referralLink)}`;
         whatsappBtn.href = whatsappUrl;
+        whatsappBtn.target = '_blank';
         whatsappBtn.addEventListener('click', function() {
             console.log('WhatsApp share clicked');
+        });
+    }
+    
+    // Instagram (opens Instagram app to create story - mobile only, desktop opens profile)
+    const instagramBtn = document.getElementById('instagram-share');
+    if (instagramBtn) {
+        // Instagram doesn't have direct share URL, so we copy the link and prompt user
+        instagramBtn.href = '#';
+        instagramBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Copy referral link to clipboard
+            navigator.clipboard.writeText(referralLink).then(() => {
+                alert(`📋 Your referral link has been copied!\n\n${referralLink}\n\nNow:\n1. Open Instagram\n2. Create a Story or Post\n3. Paste your link in the caption\n4. Share with your friends! 🎉`);
+            }).catch(() => {
+                alert(`📱 Share on Instagram:\n\n1. Copy this link: ${referralLink}\n2. Open Instagram\n3. Create a Story or Post\n4. Paste the link in caption`);
+            });
+            console.log('Instagram share clicked');
         });
     }
     
     // Twitter
     const twitterBtn = document.getElementById('twitter-share');
     if (twitterBtn) {
-        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}&url=${encodeURIComponent(referralLink)}`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessageShort)}&url=${encodeURIComponent(referralLink)}`;
         twitterBtn.href = twitterUrl;
         twitterBtn.target = '_blank';
         twitterBtn.addEventListener('click', function() {
@@ -110,11 +130,33 @@ function setupSocialSharing(referralLink, firstName) {
         });
     }
     
+    // Facebook
+    const facebookBtn = document.getElementById('facebook-share');
+    if (facebookBtn) {
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${encodeURIComponent(shareMessage)}`;
+        facebookBtn.href = facebookUrl;
+        facebookBtn.target = '_blank';
+        facebookBtn.addEventListener('click', function() {
+            console.log('Facebook share clicked');
+        });
+    }
+    
+    // LinkedIn
+    const linkedinBtn = document.getElementById('linkedin-share');
+    if (linkedinBtn) {
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}`;
+        linkedinBtn.href = linkedinUrl;
+        linkedinBtn.target = '_blank';
+        linkedinBtn.addEventListener('click', function() {
+            console.log('LinkedIn share clicked');
+        });
+    }
+    
     // Email
     const emailBtn = document.getElementById('email-share');
     if (emailBtn) {
         const subject = encodeURIComponent('Join me on MySampleHub!');
-        const body = encodeURIComponent(`${shareMessage}\n\n${referralLink}`);
+        const body = encodeURIComponent(`${shareMessage}\n\n${referralLink}\n\nSee you there!\n${firstName}`);
         emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
         emailBtn.addEventListener('click', function() {
             console.log('Email share clicked');

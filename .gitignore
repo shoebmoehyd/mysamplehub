@@ -1,0 +1,47 @@
+# Sensitive configuration files
+.env
+.env.local
+*.private.js
+*-private.*
+credentials.json
+secrets.json
+
+# API keys and secrets (never commit these!)
+*_KEY*
+*_SECRET*
+*_TOKEN*
+config.private.js
+
+# Documentation - keep locally but don't push
+GOOGLE-SHEETS-SETUP.md
+google-apps-script.js
+google-apps-script-*.js
+
+# User data exports
+user-data/
+exports/
+*.csv
+*.xlsx
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/

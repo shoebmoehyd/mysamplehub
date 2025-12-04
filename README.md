@@ -94,10 +94,10 @@ git push -u origin main
 
 ### Google Forms Integration
 
-Current form: [https://forms.gle/eUpGTC5LmcuZTHMp7](https://forms.gle/eUpGTC5LmcuZTHMp7)  
+The waitlist form is embedded directly in the landing page for better user experience and referral tracking.
 Responses are collected in a private Google Sheets (admin access only).
 
-Form opens in new tab when users click "Join Waitlist" buttons.
+To set up Google Sheets integration, see [GOOGLE-SHEETS-SETUP.md](GOOGLE-SHEETS-SETUP.md).
 
 ### Interactive Box Preview Modal
 
