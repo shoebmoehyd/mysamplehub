@@ -352,6 +352,8 @@ function setupFormValidation() {
             if (disposableEmailDomains.includes(domain)) {
                 alert('⚠️ Temporary/disposable email addresses are not allowed. Please use your personal email address (Gmail, Yahoo, Outlook, etc.)');
                 emailInput.focus();
+                submitButton.disabled = false;
+                submitButton.textContent = '🚀 Join Wave 2 Waitlist';
                 return;
             }
             
@@ -363,9 +365,13 @@ function setupFormValidation() {
                 const useCorrect = confirm(`⚠️ Did you mean ${suggestedEmail}?\n\n"${domain}" doesn't exist. ${correctDomain} is the correct domain.\n\nClick OK to use ${correctDomain}, or Cancel to edit your email.`);
                 if (useCorrect) {
                     emailInput.value = suggestedEmail;
+                    submitButton.disabled = false;
+                    submitButton.textContent = '🚀 Join Wave 2 Waitlist';
                     return; // Don't submit yet, let user review
                 } else {
                     emailInput.focus();
+                    submitButton.disabled = false;
+                    submitButton.textContent = '🚀 Join Wave 2 Waitlist';
                     return;
                 }
             }
@@ -390,12 +396,14 @@ function setupFormValidation() {
             // Basic validation - only require name and email (from Google OAuth)
             if (!firstName || !email) {
                 alert('Please ensure your Google account has name and email.');
+                submitButton.disabled = false;
+                submitButton.textContent = '🚀 Join Wave 2 Waitlist';
                 return;
             }
             
             // Disable button and show loading
             submitButton.disabled = true;
-            submitButton.textContent = '⏳ Checking...';
+            submitButton.textContent = '⏳ Submitting...';
             
             // Prepare form data
             const city = document.getElementById('city').value;
@@ -428,7 +436,6 @@ function setupFormValidation() {
                 
                 // Submit to Google Sheets (if URL is configured)
                 if (GOOGLE_SCRIPT_URL) {
-                    submitButton.textContent = '⏳ Submitting...';
                     
                     console.log('=== WAVE 2 FORM SUBMISSION ===');
                     console.log('Submitting to:', GOOGLE_SCRIPT_URL);
