@@ -442,7 +442,7 @@ function setupFormValidation() {
                 formData.googleId = googleUser.googleId || 'unknown';
                 
                 // Submit to Wave 2 Google Sheets via Apps Script
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaG1cFvHntJfyy3SW5IiU-WEs247TMU_yD9IQJvzmqZV9L-KcVF_O4D2HuIgnt2F-x/exec';
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAcZ7SFjpfmowYlJSBYlY3Cf4l2uKZ7R7h0m7UFG-a4ZdDi-Tn_8-ynNXHHOqDKx7c/exec';
                 
                 console.log('=== WAVE 2 SUBMISSION ===');
                 console.log('Data:', formData);
