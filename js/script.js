@@ -1,5 +1,62 @@
 // MySampleHub Landing Page - Main JavaScript
 
+// Google OAuth Handler
+function handleCredentialResponse(response) {
+    // Decode JWT token
+    const credential = response.credential;
+    const decoded = parseJwt(credential);
+    
+    // Store user data
+    localStorage.setItem('googleUser', JSON.stringify({
+        email: decoded.email,
+        name: decoded.name,
+        googleId: decoded.sub,
+        signedIn: true
+    }));
+    
+    // Populate form fields
+    document.getElementById('email').value = decoded.email;
+    document.getElementById('firstName').value = decoded.name;
+    
+    // UNLOCK FORM: Remove disabled state
+    const form = document.getElementById('mysamplehub-form');
+    form.style.opacity = '1';
+    form.style.pointerEvents = 'auto';
+    
+    // Hide notice
+    const notice = document.querySelector('.form-unlock-notice');
+    if (notice) {
+        notice.style.display = 'none';
+    }
+    
+    // Enable all form inputs
+    const inputs = form.querySelectorAll('input, select, textarea, button');
+    inputs.forEach(input => {
+        input.disabled = false;
+    });
+    
+    // Hide Google Sign-In section
+    document.getElementById('google-signin-section').style.display = 'none';
+    
+    // Scroll to form smoothly
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Show success message
+    const successMsg = document.createElement('div');
+    successMsg.className = 'auth-success-message';
+    successMsg.innerHTML = '✅ Email verified! Complete the form to join Wave 2.';
+    form.insertBefore(successMsg, form.firstChild);
+}
+
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -310,34 +367,26 @@ function setupFormValidation() {
                 }
             }
             
-            // Validate categories
+            // Validate categories (OPTIONAL for Wave 2)
             const selectedCategories = Array.from(categoryCheckboxes)
                 .filter(cb => cb.checked)
                 .map(cb => cb.value);
             
             const categoriesError = document.getElementById('categories-error');
+            categoriesError.textContent = ''; // Clear error
             
-            if (selectedCategories.length === 0) {
-                categoriesError.textContent = 'Please select at least one category';
-                return;
-            } else {
-                categoriesError.textContent = '';
-            }
-            
-            // Collect interest ratings
+            // Collect interest ratings (only if categories selected)
             const interestRatings = {};
             selectedCategories.forEach((category, index) => {
                 const rating = form.querySelector(`input[name="interest-${index}"]:checked`);
-                if (!rating) {
-                    alert(`Please rate your interest level for ${category}`);
-                    throw new Error('Missing rating');
+                if (rating) {
+                    interestRatings[category] = parseInt(rating.value);
                 }
-                interestRatings[category] = parseInt(rating.value);
             });
             
-            // Basic validation
-            if (!firstName || !email || !howHeard) {
-                alert('Please fill in all required fields.');
+            // Basic validation - only require name and email (from Google OAuth)
+            if (!firstName || !email) {
+                alert('Please ensure your Google account has name and email.');
                 return;
             }
             
@@ -359,16 +408,21 @@ function setupFormValidation() {
             };
             
             try {
-                // Submit to Google Sheets via Apps Script
-                // IMPORTANT: Replace with your actual Google Apps Script Web App URL
-                // See GOOGLE-SHEETS-SETUP.md for instructions
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYi_vSsVNu6apkuh7531CocPLWmLUyixvUqP_CGRWFTIQ8s2wcHQ6LBF-ZGrlF8r5F8w/exec'; 
+                // Submit to Wave 2 Google Sheets via Apps Script
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaG1cFvHntJfyy3SW5IiU-WEs247TMU_yD9IQJvzmqZV9L-KcVF_O4D2HuIgnt2F-x/exec';
+                
+                // Get Google user data
+                const googleUser = JSON.parse(localStorage.getItem('googleUser') || '{}');
+                
+                // Add Google verification to form data
+                formData.googleId = googleUser.googleId;
+                formData.verificationMethod = 'Google OAuth';
                 
                 // Submit to Google Sheets (if URL is configured)
-                if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+                if (GOOGLE_SCRIPT_URL) {
                     submitButton.textContent = '⏳ Submitting...';
                     
-                    console.log('=== FORM SUBMISSION DEBUG ===');
+                    console.log('=== WAVE 2 FORM SUBMISSION ===');
                     console.log('Submitting to:', GOOGLE_SCRIPT_URL);
                     console.log('Form data:', formData);
                     console.log('Timestamp:', new Date().toISOString());
@@ -383,22 +437,18 @@ function setupFormValidation() {
                             body: JSON.stringify(formData)
                         });
                         
-                        console.log('✅ Request sent successfully (no-cors mode)');
-                        console.log('Note: Data should appear in Google Sheet within 2-3 seconds');
-                        console.log('Check your Google Sheet now!');
-                        // Note: With no-cors, we cannot read the response
-                        // But the data is being submitted to Google Sheets
+                        console.log('✅ Request sent to Wave 2 waitlist');
+                        console.log('Data submitted with Google OAuth verification');
                     } catch (fetchError) {
                         console.error('❌ Fetch error:', fetchError);
                         console.error('Error details:', fetchError.message);
-                        console.error('This error means the request did not reach Google Sheets');
-                        // Continue anyway - data is saved in localStorage
+                        // Continue anyway - form will still redirect to thank you
                     }
                     
-                    console.log('=== END DEBUG ===');
+                    console.log('=== END WAVE 2 SUBMISSION ===');
                 }
                 
-                // Save to localStorage as backup and for future duplicate checks
+                // Save to localStorage as backup
                 localStorage.setItem('mysamplehub_user', JSON.stringify(formData));
                 
                 // Redirect to thank you page with parameters
@@ -412,7 +462,7 @@ function setupFormValidation() {
                 
             } catch (error) {
                 console.error('Submission error:', error);
-                // Still redirect even if Google Sheets submission fails
+                // Still redirect even if submission fails
                 // Data is saved in localStorage as backup
                 localStorage.setItem('mysamplehub_user', JSON.stringify(formData));
                 

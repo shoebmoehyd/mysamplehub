@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -32,13 +33,13 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1 class="hero-title">Stop Guessing, Start Trying: The Best Emerging Brands in India, Delivered to Your Door.</h1>
-                <p class="hero-subtitle">Get exclusive, curated trial boxes of top-rated Beauty, Snacks, Fragrances, and Supplements—<strong class="highlight-free">FREE</strong>. All we ask for is your honest opinion.</p>
+                <h1 class="hero-title">🚀 Whoa! We Hit 16,500+ Sign-ups!</h1>
+                <p class="hero-subtitle">Wave 1 filled up faster than we expected. But don't worry—<strong>Wave 2 is opening soon</strong> and we're saving you a spot!</p>
                 
                 <!-- Scarcity Counter -->
                 <div class="scarcity-badge">
                     <span class="pulse-dot"></span>
-                    <strong>WAITLIST CLOSING SOON!</strong> Only <span id="spots-left" class="spots-number">247</span> spots left in the launch cohort.
+                    <strong>Wave 1 Full 🌊</strong> Catch Wave 2 before it's gone!
                 </div>
             </div>
         </section>
@@ -47,8 +48,8 @@
         <section class="waitlist-section" id="waitlist-form">
             <div class="container">
                 <div class="form-container">
-                    <h2 class="form-title">Join the Exclusive Launch Waitlist</h2>
-                    <p class="form-subtitle">Be among the first 1,000 members to receive the inaugural box</p>
+                    <h2 class="form-title">🎯 Catch Wave 2!</h2>
+                    <p class="form-subtitle">Tell us what you love, and we'll hook you up first 💜</p>
                     
                     <div class="form-benefits">
                         <div class="benefit-item">
@@ -65,7 +66,23 @@
                         </div>
                     </div>
 
-                    <form id="mysamplehub-form" class="waitlist-form-embedded">
+                    <!-- Google Sign-In Section -->
+                    <div id="google-signin-section" class="google-signin-wrapper">
+                        <div class="signin-label">✨ Verify your email to continue</div>
+                        <div id="g_id_onload"
+                             data-client_id="1093874253800-qmj79polnk0fhbqitposp25dcdhifrjg.apps.googleusercontent.com"
+                             data-callback="handleCredentialResponse">
+                        </div>
+                        <div class="g_id_signin" data-type="standard" data-size="medium" data-theme="outline"></div>
+                        <div class="signin-notes">
+                            <p class="signin-note">✅ 16,500+ members • 🔒 Private email • 📦 Free samples</p>
+                        </div>
+                    </div>
+
+                    <form id="mysamplehub-form" class="waitlist-form-embedded" style="opacity: 0.5; pointer-events: none;">
+                        <div class="form-unlock-notice">
+                            <p>👆 Sign in above to unlock the form</p>
+                        </div>
                         <div class="form-group">
                             <label for="firstName">Full Name *</label>
                             <input type="text" id="firstName" name="firstName" required placeholder="Enter your full name">
@@ -73,7 +90,7 @@
 
                         <div class="form-group">
                             <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com" readonly>
                         </div>
 
                         <div class="form-group">
@@ -135,10 +152,10 @@
                         </div>
 
                         <button type="submit" class="cta-button cta-button-large submit-button">
-                            🎁 Claim Your FREE Sample Box Now
+                            🌊 Yes! I'm Catching Wave 2
                         </button>
 
-                        <p class="form-note">Takes less than 2 minutes • Completely FREE</p>
+                        <p class="form-note">Wave 1 sold out in days! ⚡ Secure yours now (takes 90 seconds)</p>
                     </form>
                     
                     <p class="form-disclaimer">By joining, you agree to provide honest feedback on the samples you receive.</p>
@@ -216,9 +233,9 @@
                 </div>
                 
                     <div class="modal-cta">
-                    <p class="modal-note">💝 All samples are FREE • Delivered to your doorstep • No hidden charges</p>
+                    <p class="modal-note">💝 100% FREE • Delivered to your door • Zero strings attached</p>
                     <button onclick="closeBoxPreview(); document.getElementById('waitlist-form').scrollIntoView({behavior: 'smooth'});" class="cta-button cta-button-large">
-                        Claim My Free Box Now!
+                        I Want This! 🙋‍♀️
                     </button>
                 </div>
             </div>
@@ -227,7 +244,7 @@
         <!-- Value Propositions Section -->
         <section class="value-props">
             <div class="container">
-                <h2 class="section-title">Why Join MySampleHub?</h2>
+                <h2 class="section-title">Why Everyone's Talking About Us 💬</h2>
                 
                 <div class="value-grid">
                     <div class="value-card">
@@ -322,7 +339,7 @@
         <!-- How It Works Section -->
         <section class="how-it-works">
             <div class="container">
-                <h2 class="section-title">How It Works</h2>
+                <h2 class="section-title">Here's How the Magic Happens ✨</h2>
                 
                 <div class="steps">
                     <div class="step">
@@ -363,7 +380,7 @@
             <div class="container">
                 <div class="stats">
                     <div class="stat">
-                        <div class="stat-number" id="waitlist-count">0</div>
+                        <div class="stat-number">16,500+</div>
                         <div class="stat-label">Members Joining</div>
                     </div>
                     <div class="stat">
@@ -381,9 +398,9 @@
         <!-- Final CTA -->
         <section class="final-cta">
             <div class="container">
-                <h2>Don't Miss Out on the Launch!</h2>
-                <p>Limited spots available. Join now to guarantee your place in the first shipment.</p>
-                <a href="#waitlist-form" class="cta-button cta-button-large" onclick="event.preventDefault(); document.getElementById('waitlist-form').scrollIntoView({behavior: 'smooth'});">Secure Your Spot Now</a>
+                <h2>Ready to Discover Your Next Favorite Brand? 🌟</h2>
+                <p>16,500 people already joined. Don't be the one scrolling through Instagram later wishing you signed up! 😅</p>
+                <a href="#waitlist-form" class="cta-button cta-button-large" onclick="event.preventDefault(); document.getElementById('waitlist-form').scrollIntoView({behavior: 'smooth'});">Let's Go! Catch Wave 2 🌊</a>
             </div>
         </section>
     </main>
