@@ -409,17 +409,16 @@ function setupFormValidation() {
             const city = document.getElementById('city').value;
             const finalCity = city || 'Not specified';
             
-            // Convert interestRatings to string format for Google Sheets
-            const ratingsString = Object.entries(interestRatings)
-                .map(([cat, rating]) => `"${cat}":${rating}`)
-                .join(',');
+            // Format interest ratings as JSON string
+            const ratingsString = JSON.stringify(interestRatings);
             
             const formData = {
                 firstName,
                 email,
+                phone: '',  // Keep empty for Wave 2
                 city: finalCity,
-                categories: selectedCategories.join(', '),
-                interestRatings: ratingsString || 'None',
+                categories: selectedCategories,  // Send as ARRAY (Apps Script will join)
+                interestRatings: ratingsString,
                 howHeard: howHeard || 'Not specified',
                 preferredTime: preferredTime || 'No preference',
                 timestamp: new Date().toISOString(),
