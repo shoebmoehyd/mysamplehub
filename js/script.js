@@ -297,10 +297,6 @@ function setupFormValidation() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // MAINTENANCE MODE - Temporarily disabled
-            alert('🔧 Wave 2 signups are temporarily paused for maintenance. We\'re fixing the backend - please check back in 10 minutes!');
-            return;
-            
             const firstName = document.getElementById('firstName').value.trim();
             const email = document.getElementById('email').value.trim().toLowerCase();
             const howHeard = document.getElementById('howHeard').value;
@@ -446,7 +442,7 @@ function setupFormValidation() {
                 formData.googleId = googleUser.googleId || 'unknown';
                 
                 // Submit to Wave 2 Google Sheets via Apps Script
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAcZ7SFjpfmowYlJSBYlY3Cf4l2uKZ7R7h0m7UFG-a4ZdDi-Tn_8-ynNXHHOqDKx7c/exec';
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoKJBGSeU95V9BF_fiRCs3ss2N-zTNR8-3Nr7hcPXd_2viAwgCtUoZZcsOroz7Qwxh/exec';
                 
                 console.log('=== WAVE 2 SUBMISSION ===');
                 console.log('Data:', formData);
