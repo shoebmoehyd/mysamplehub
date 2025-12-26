@@ -407,86 +407,78 @@ function setupFormValidation() {
             
             // Prepare form data
             const city = document.getElementById('city').value;
-            const otherCity = document.getElementById('otherCity').value;
-            const finalCity = city === 'other' ? otherCity : city;
+            const finalCity = city || 'Not specified';
+            
+            // Convert interestRatings to string format for Google Sheets
+            const ratingsString = Object.entries(interestRatings)
+                .map(([cat, rating]) => `"${cat}":${rating}`)
+                .join(',');
             
             const formData = {
                 firstName,
                 email,
-                city: finalCity || 'Not specified',
-                categories: selectedCategories,
-                interestRatings,
-                howHeard,
+                city: finalCity,
+                categories: selectedCategories.join(', '),
+                interestRatings: ratingsString || 'None',
+                howHeard: howHeard || 'Not specified',
                 preferredTime: preferredTime || 'No preference',
                 timestamp: new Date().toISOString(),
-                referrer: new URLSearchParams(window.location.search).get('ref') || 'direct',
-                emailVerified: false // Will be verified via welcome email later
+                referrer: new URLSearchParams(window.location.search).get('ref') || 'direct'
             };
             
-            try {
-                // Submit to Wave 2 Google Sheets via Apps Script
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzVo4_qwaC8sxVpTYLabXYaiQNhnTQ3D8x8botFkWnlmPbAfTpHdcceaI-pWNUc_bI/exec';
-                
-                // Get Google user data
-                const googleUser = JSON.parse(localStorage.getItem('googleUser') || '{}');
-                
-                // Add Google verification to form data
-                formData.googleId = googleUser.googleId;
-                formData.verificationMethod = 'Google OAuth';
-                
-                // Submit to Google Sheets (if URL is configured)
-                if (GOOGLE_SCRIPT_URL) {
-                    
-                    console.log('=== WAVE 2 FORM SUBMISSION ===');
-                    console.log('Submitting to:', GOOGLE_SCRIPT_URL);
-                    console.log('Form data:', formData);
-                    console.log('Timestamp:', new Date().toISOString());
-                    
-                    try {
-                        const response = await fetch(GOOGLE_SCRIPT_URL, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(formData)
-                        });
-                        
-                        console.log('✅ Request sent to Wave 2 waitlist');
-                        console.log('Data submitted with Google OAuth verification');
-                    } catch (fetchError) {
-                        console.error('❌ Fetch error:', fetchError);
-                        console.error('Error details:', fetchError.message);
-                        // Continue anyway - form will still redirect to thank you
-                    }
-                    
-                    console.log('=== END WAVE 2 SUBMISSION ===');
-                }
-                
-                // Save to localStorage as backup
-                localStorage.setItem('mysamplehub_user', JSON.stringify(formData));
-                
-                // Redirect to thank you page with parameters
+            // FAILSAFE: Force redirect after 3 seconds no matter what
+            const redirectTimeout = setTimeout(() => {
+                console.log('⏱️ Timeout reached - forcing redirect');
                 const params = new URLSearchParams({
                     name: firstName,
                     email: email,
-                    ref: btoa(email) // Create unique referral code from email
+                    ref: btoa(email)
                 });
-                
                 window.location.href = `thank-you.html?${params.toString()}`;
+            }, 3000);
+            
+            try {
+                // Get Google user data
+                const googleUser = JSON.parse(localStorage.getItem('googleUser') || '{}');
+                formData.googleId = googleUser.googleId || 'unknown';
                 
-            } catch (error) {
-                console.error('Submission error:', error);
-                // Still redirect even if submission fails
-                // Data is saved in localStorage as backup
+                // Submit to Wave 2 Google Sheets via Apps Script
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzVo4_qwaC8sxVpTYLabXYaiQNhnTQ3D8x8botFkWnlmPbAfTpHdcceaI-pWNUc_bI/exec';
+                
+                console.log('=== WAVE 2 SUBMISSION ===');
+                console.log('Data:', formData);
+                
+                // Fire and forget - don't wait for response
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                }).catch(e => console.log('Fetch error (expected):', e));
+                
+                // Save backup
                 localStorage.setItem('mysamplehub_user', JSON.stringify(formData));
                 
+                // Immediate redirect (don't wait for fetch)
+                clearTimeout(redirectTimeout);
                 const params = new URLSearchParams({
                     name: firstName,
                     email: email,
                     ref: btoa(email)
                 });
                 
+                window.location.href = `thank-you.html?${params.toString()}`;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                clearTimeout(redirectTimeout);
+                
+                // Force redirect on error
+                const params = new URLSearchParams({
+                    name: firstName,
+                    email: email,
+                    ref: btoa(email)
+                });
                 window.location.href = `thank-you.html?${params.toString()}`;
             }
         });
