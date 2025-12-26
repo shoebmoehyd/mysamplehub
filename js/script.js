@@ -310,14 +310,30 @@ function setupFormValidation() {
                     const prevData = JSON.parse(previousSubmission);
                     if (prevData.email === email) {
                         const refCode = btoa(email);
-                        const confirmed = confirm(`✅ You're already on the waitlist!\n\nWould you like to view your referral link to share with friends?`);
-                        if (confirmed) {
-                            window.location.href = `thank-you.html?name=${encodeURIComponent(prevData.firstName || firstName)}&email=${encodeURIComponent(email)}&ref=${refCode}`;
-                        }
-                        return;
+                        alert(`✅ You're already on the Wave 2 waitlist!\n\nYou cannot submit again with the same email.`);
+                        const params = new URLSearchParams({
+                            name: prevData.firstName || firstName,
+                            email: email,
+                            ref: refCode
+                        });
+                        window.location.href = `thank-you.html?${params.toString()}`;
+                        return; // STOP HERE - Don't allow resubmission
                     }
                 } catch (e) {
                     console.log('Could not parse previous submission');
+                }
+            }
+            
+            // Check Google ID for duplicate submissions
+            const googleUser = JSON.parse(localStorage.getItem('googleUser') || '{}');
+            const googleId = googleUser.googleId || '';
+            if (googleId) {
+                const prevGoogleId = localStorage.getItem('mysamplehub_googleId');
+                if (prevGoogleId === googleId) {
+                    alert('⚠️ You have already submitted with this Google account!\n\nDuplicate submissions are not allowed.');
+                    submitButton.disabled = false;
+                    submitButton.textContent = '🚀 Join Wave 2 Waitlist';
+                    return; // STOP HERE - Don't allow duplicate Google ID
                 }
             }
             
@@ -447,26 +463,49 @@ function setupFormValidation() {
                 console.log('=== WAVE 2 SUBMISSION ===');
                 console.log('Data:', formData);
                 
-                // Fire and forget - don't wait for response
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                }).catch(e => console.log('Fetch error (expected):', e));
+                // Try with CORS to see errors (will fallback to no-cors if CORS fails)
+                try {
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    console.log('✅ Apps Script Response:', result);
+                    
+                    if (result.success) {
+                        console.log('✅ Data saved successfully!');
+                    } else {
+                        console.error('❌ Apps Script Error:', result.error);
+                        alert('⚠️ Submission recorded locally, but there was an issue with the server. Our team will manually add you to the list.');
+                    }
+                } catch (corsError) {
+                    console.log('CORS not available, using no-cors fallback');
+                    // Fallback to no-cors if CORS fails
+                    fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    }).catch(e => console.log('Fetch error:', e));
+                }
                 
                 // Save backup
                 localStorage.setItem('mysamplehub_user', JSON.stringify(formData));
+                localStorage.setItem('mysamplehub_googleId', googleId); // Save Google ID to prevent duplicates
                 
-                // Immediate redirect (don't wait for fetch)
-                clearTimeout(redirectTimeout);
-                const params = new URLSearchParams({
-                    name: firstName,
-                    email: email,
-                    ref: btoa(email)
-                });
-                
-                window.location.href = `thank-you.html?${params.toString()}`;
+                // Wait 1 second to allow fetch to complete, then redirect
+                setTimeout(() => {
+                    clearTimeout(redirectTimeout);
+                    const params = new URLSearchParams({
+                        name: firstName,
+                        email: email,
+                        ref: btoa(email)
+                    });
+                    
+                    window.location.href = `thank-you.html?${params.toString()}`;
+                }, 1000);
                 
             } catch (error) {
                 console.error('Error:', error);
