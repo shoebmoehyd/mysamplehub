@@ -417,7 +417,7 @@ function setupFormValidation() {
             
             try {
                 // Submit to Wave 2 Google Sheets via Apps Script
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaG1cFvHntJfyy3SW5IiU-WEs247TMU_yD9IQJvzmqZV9L-KcVF_O4D2HuIgnt2F-x/exec';
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzVo4_qwaC8sxVpTYLabXYaiQNhnTQ3D8x8botFkWnlmPbAfTpHdcceaI-pWNUc_bI/exec';
                 
                 // Get Google user data
                 const googleUser = JSON.parse(localStorage.getItem('googleUser') || '{}');
