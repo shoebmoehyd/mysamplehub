@@ -297,6 +297,10 @@ function setupFormValidation() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // MAINTENANCE MODE - Temporarily disabled
+            alert('🔧 Wave 2 signups are temporarily paused for maintenance. We\'re fixing the backend - please check back in 10 minutes!');
+            return;
+            
             const firstName = document.getElementById('firstName').value.trim();
             const email = document.getElementById('email').value.trim().toLowerCase();
             const howHeard = document.getElementById('howHeard').value;
