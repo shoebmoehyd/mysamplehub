@@ -224,6 +224,9 @@ function setupFormValidation() {
             });
         });
         
+        // City dropdown is now a searchable text input with datalist
+        // No special handling needed - users can type or select from suggestions
+        
         function updateInterestRatings() {
             const selectedCategories = Array.from(categoryCheckboxes)
                 .filter(cb => cb.checked)
@@ -395,9 +398,14 @@ function setupFormValidation() {
             submitButton.textContent = '⏳ Checking...';
             
             // Prepare form data
+            const city = document.getElementById('city').value;
+            const otherCity = document.getElementById('otherCity').value;
+            const finalCity = city === 'other' ? otherCity : city;
+            
             const formData = {
                 firstName,
                 email,
+                city: finalCity || 'Not specified',
                 categories: selectedCategories,
                 interestRatings,
                 howHeard,
